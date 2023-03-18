@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const colors = require("colors");
+const cookieParser = require("cookie-parser");
 
 // error
 const errorMiddleware = require("./middleware/error");
@@ -19,13 +20,16 @@ const PORT = process.env.PORT || 4000;
 
 // ROUTES
 const productRoute = require("./routes/productRoute");
+const userRoute = require("./routes/userRoute");
 
 // connect to db
 const connectedDB = require("./db/connect");
 connectedDB();
 
 app.use(express.json());
+app.use(cookieParser());
 app.use("/api/v1", productRoute);
+app.use("/api/v1", userRoute);
 
 // Middleware for Errors
 app.use(errorMiddleware);
